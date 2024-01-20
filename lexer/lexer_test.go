@@ -1,14 +1,18 @@
-package lexer 
+package lexer
 
 import (
-	testing
-	chad/token
+	"testing"
+
+	"github.com/FkLalita/Chad-Lang/token"
 )
 
 func TestNextToken(t *testing.T) {
-	input := `{}():,`
+	input := `=+(){},;`
 
-	tests := []struct{expectedType token.Type; expectedLiteral string}{
+	tests := []struct {
+		expectedType    token.TokenType
+		expectedLiteral string
+	}{
 		{token.ASSIGN, "="},
 		{token.PLUS, "+"},
 		{token.LPAREN, "("},
@@ -18,25 +22,16 @@ func TestNextToken(t *testing.T) {
 		{token.COMMA, ","},
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
-	
 	}
 	l := New(input)
 
 	for i, tt := range tests {
 		tok := l.NextToken()
 		if tok.Type != tt.expectedType {
-			t.Fatalf("tests[%d] - tokentype wrong. expected=%q, got=%q",i, tt.expectedType, tok.Type)
+			t.Fatalf("tests[%d] - tokentype wrong. expected=%q, got=%q", i, tt.expectedType, tok.Type)
 		}
 		if tok.Literal != tt.expectedLiteral {
-			t.Fatalf("tests[%d] - literal wrong. expected=%q, got=%q",i, tt.expectedLiteral, tok.Literal)
+			t.Fatalf("tests[%d] - literal wrong. expected=%q, got=%q", i, tt.expectedLiteral, tok.Literal)
 		}
 	}
-}
-
-
-
-
-
-
-
 }
